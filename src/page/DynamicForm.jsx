@@ -9,17 +9,17 @@ import TextArea from "../components/TextArea";
 import ImageUpload from "../components/UploadField";
 
 const DynamicFormGenerator = () => {
-  const [submittedData, setSubmittedData] = useState(null);
   const [formFields, setFormFields] = useState([]);
-
+  const [submittedData, setSubmittedData] = useState(null);
   const submitForm = async (data) => {
+    console.log("helll")
     try {
       if (Object.keys(data).length === 0) {
-        // console.log("No data to submit.");
+        console.log("No data to submit.");
         return;
       }
-      // console.log("Form data:", data);
       setSubmittedData(data);
+     
     } catch (error) {}
   };
 
@@ -138,6 +138,41 @@ const DynamicFormGenerator = () => {
             )}
           />
         );
+        case "file":
+        return (
+          <Controller
+            key={index}
+            name={`field_${index}`}
+            control={control}
+            rules={{
+              required: "This field is required",
+              validate: (value) => {
+                if (value[0]) {
+                  const fileType = value[0].type;
+                  const fileSize = value[0].size;
+                  // Add your file type and size validation logic here
+                  const allowedFileTypes = ["image/jpeg", "image/png"];
+                  const maxFileSize = 1024 * 1024; // 1 MB
+
+                  if (allowedFileTypes.includes(fileType) && fileSize <= maxFileSize) {
+                    return true; // Return true if validation passes
+                  } else {
+                    return "Invalid file type or size";
+                  }
+                }
+                return false; // Return false if no file is selected
+              },
+            }}
+            render={({ field }) => (
+              <ImageUpload
+                onImageChange={(imageData) => updateImageField(index, imageData)}
+                fileInputProps={{ ...field }}
+                error={errors?.[`field_${index}`]?.message}
+              />
+            )}
+          />
+        );
+        
       case "image":
         return (
           <ImageUpload
@@ -251,7 +286,7 @@ const DynamicFormGenerator = () => {
         <div className="form-container">
           {formFields.map((fieldData, index) => (
             <div className="field-style" key={index}>
-              <label>add label name</label>
+             <label>{fieldData.fieldType === 'image' ? 'Add Image' : 'Add Label Name'}</label>
               <input
               class="input"
                 placeholder="Add a label for the field"
@@ -285,9 +320,14 @@ const DynamicFormGenerator = () => {
               className="btn"
               type="button"
               onClick={() => addFormField("textarea")}
+            >Add Text Area</button>
+              {/* <button
+              className="btn"
+              type="button"
+              onClick={() => addFormField("file")}
             >
-              Add Text Area
-            </button>
+              Add file
+            </button> */}
             <button
               className="btn"
               type="button"
@@ -328,18 +368,27 @@ const DynamicFormGenerator = () => {
           <button className="save-btn" type="button" onClick={saveFormConfig}>
               Save Form Configuration
             </button>
+            <button className="submit-btn" type="submit">
+            Submit
+          </button>
         </div>
       </form>
       {submittedData && (
-        <div className="submitted-data-container">
-          <h2>Submitted Form Data</h2>
-          {Object.keys(submittedData).map((key) => (
-            <div key={key}>
-              <strong>{key}:</strong> {submittedData[key].toString()}
-            </div>
-          ))}
-        </div>
-      )}
+          <div className="submitted-data">
+            <h2>Submitted Data</h2>
+            <p>{JSON.stringify(submittedData.field_0)}</p>
+            <p>{JSON.stringify(submittedData.field_1)}</p>
+            <p>{JSON.stringify(submittedData.field_2)}</p>
+            <p>{JSON.stringify(submittedData)}</p>
+            {/* Display image if available */}
+    {submittedData.imageData && (
+      <div>
+        <h3>Image</h3>
+        <img src={submittedData.imageData} alt="Submitted Image" />
+      </div>
+    )}
+          </div>
+        )}
     </div>
     </div>
   );

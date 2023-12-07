@@ -4,7 +4,7 @@ const TextArea = ({ label, register, error, value }) => {
   return (
     <div className='textarea-container'>
       <label>{label}</label>
-      <textarea {...register} value={value} required />
+      <textarea {...register} value={value} />
     </div>
   );
 };

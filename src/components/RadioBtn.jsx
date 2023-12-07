@@ -7,7 +7,7 @@ const Radio = ({ label, value, options, register }) => {
       {options.map((option) => (
         <label key={option.value}>
          <span className='option-label'>{option.label}</span> 
-          <input type="radio" value={option.value} {...register} checked={option.value === value} />
+          <input type="radio" value={value} {...register} checked={option.value === value} />
         </label>
       ))}
     </div>

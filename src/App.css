@@ -129,7 +129,9 @@ label {
   width: fit-content;
 }
 p {
-  color: red;
+  color: #fff;
+  font-size: 22px;
+  margin-bottom:12px;
 }
 .textarea {
   padding: 8px;

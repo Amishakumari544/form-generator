@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ImageUpload = ({ label, onImageChange }) => {
+const ImageUpload = ({ label, onImageChange,value }) => {
   const [image, setImage] = useState(null);
   const [, setError] = useState(null);
 
@@ -36,7 +36,7 @@ const ImageUpload = ({ label, onImageChange }) => {
   return (
     <div className="image-container">
        <label required>{label}</label>
-      <input type="file" accept=".jpg" onChange={handleImageChange}  className="custom-file-input" />
+      <input type="file" value={value} accept=".jpg" onChange={handleImageChange}  className="custom-file-input" />
       {image && <img src={image} alt="Uploaded" style={{ maxWidth: "200px" }} />}
     </div>
   );
