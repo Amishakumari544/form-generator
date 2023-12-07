@@ -224,10 +224,12 @@ button {
   cursor: pointer;
 }
 .save-btn {
-  border: none;
+  border: 1px solid #fff;
   margin-bottom: 30px;
   font-size: 22px;
   cursor: pointer;
+  padding:10px;
+  border-radius:4px;
 }
 .custom-file-input {
   color: transparent;

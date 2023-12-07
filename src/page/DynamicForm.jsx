@@ -12,10 +12,9 @@ const DynamicFormGenerator = () => {
   const [formFields, setFormFields] = useState([]);
   const [submittedData, setSubmittedData] = useState(null);
   const submitForm = async (data) => {
-    console.log("helll")
     try {
       if (Object.keys(data).length === 0) {
-        console.log("No data to submit.");
+        alert("nothing to submit!")
         return;
       }
       setSubmittedData(data);
@@ -380,7 +379,6 @@ const DynamicFormGenerator = () => {
             <p>{JSON.stringify(submittedData.field_1)}</p>
             <p>{JSON.stringify(submittedData.field_2)}</p>
             <p>{JSON.stringify(submittedData)}</p>
-            {/* Display image if available */}
     {submittedData.imageData && (
       <div>
         <h3>Image</h3>
